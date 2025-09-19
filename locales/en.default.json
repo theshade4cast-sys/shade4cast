@@ -1,0 +1,45 @@
+{
+  "general": {
+    "pagination": {
+      "page": "Page {{ page }}"
+    },
+    "share": {
+      "success_message": "Link copied to clipboard!"
+    }
+  },
+  "accessibility": {
+    "skip_to_text": "Skip to content",
+    "refresh_page": "Refresh page",
+    "link_messages": {
+      "new_window": "Opens in a new window"
+    }
+  },
+  "blogs": {
+    "article": {
+      "tagged": "Tagged"
+    }
+  },
+  "sections": {
+    "cart": {
+      "title": "Your Cart",
+      "cart_error": "There was an error updating your cart. Please try again.",
+      "cart_quantity_error_html": "You can only add {{ quantity }} of this item to your cart."
+    },
+    "slideshow": {
+      "pause_slideshow": "Pause slideshow",
+      "play_slideshow": "Play slideshow"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "value_unavailable": "{{ option_value }} - Unavailable",
+      "choose_options": "Choose options",
+      "media": {
+        "image_available": "Image {{ index }} is now available in gallery view"
+      }
+    }
+  }
+}

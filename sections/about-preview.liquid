@@ -1,0 +1,160 @@
+{% comment %}
+  About preview section for homepage
+{% endcomment %}
+
+<section class="section">
+  <div class="container">
+    <div class="about-preview">
+      <div class="grid grid--2-col">
+        <div class="about-preview__content">
+          <h2 class="about-preview__title">{{ section.settings.title | default: "Meet The Hosts" }}</h2>
+          <div class="about-preview__text">
+            {% if section.settings.text != blank %}
+              {{ section.settings.text }}
+            {% else %}
+              <p>The Shade 4cast brings together four dynamic personalities to discuss the hottest political topics and current events. With wit, wisdom, and just the right amount of shade, our hosts deliver insights that matter.</p>
+            {% endif %}
+          </div>
+          
+          {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+            <a href="{{ section.settings.button_url }}" class="btn btn--secondary">
+              {{ section.settings.button_text }}
+            </a>
+          {% endif %}
+        </div>
+        
+        <div class="about-preview__media">
+          {% if section.settings.image != blank %}
+            <img src="{{ section.settings.image | image_url: width: 600 }}" 
+                 alt="{{ section.settings.image.alt | escape }}"
+                 class="about-preview__image"
+                 loading="lazy">
+          {% else %}
+            <div class="about-preview__placeholder">
+              <svg width="120" height="120" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+              </svg>
+              <p>Host Photo</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-preview {
+    padding: 2rem 0;
+  }
+  
+  .about-preview__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 2rem;
+  }
+  
+  .about-preview__title {
+    font-size: 3.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .about-preview__text {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    color: var(--color-base-accent-2);
+    margin-bottom: 3rem;
+  }
+  
+  .about-preview__media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .about-preview__image {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: var(--media-radius);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-preview__placeholder {
+    background-color: var(--color-base-background-2);
+    border: 2px dashed rgba(0, 0, 0, 0.2);
+    border-radius: var(--media-radius);
+    padding: 4rem;
+    text-align: center;
+    color: var(--color-base-accent-2);
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .about-preview__placeholder svg {
+    margin-bottom: 1rem;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .about-preview .grid--2-col {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    
+    .about-preview__content {
+      padding-right: 0;
+      text-align: center;
+    }
+    
+    .about-preview__title {
+      font-size: 2.8rem;
+    }
+    
+    .about-preview__text {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "About Preview",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Meet The Hosts"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>The Shade 4cast brings together four dynamic personalities to discuss the hottest political topics and current events. With wit, wisdom, and just the right amount of shade, our hosts deliver insights that matter.</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Preview"
+    }
+  ]
+}
+{% endschema %}

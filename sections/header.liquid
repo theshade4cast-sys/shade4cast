@@ -1,0 +1,305 @@
+{% comment %}
+  Header section for The Shade 4cast theme
+{% endcomment %}
+
+<header class="header" role="banner">
+  <div class="container">
+    <div class="header__inner">
+      <a href="{{ routes.root_url }}" class="header__logo">
+        {% if settings.logo %}
+          <img src="{{ settings.logo | image_url: width: 200 }}" 
+               alt="{{ shop.name }}"
+               class="header__logo-image"
+               width="200"
+               height="auto">
+        {% else %}
+          The Shade 4cast
+        {% endif %}
+      </a>
+      
+      <nav class="header__nav" role="navigation" aria-label="Main navigation">
+        <ul class="header__nav-list">
+          <li class="header__nav-item">
+            <a href="{{ routes.root_url }}" class="header__nav-link">Home</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="{{ pages.about.url | default: '/pages/about' }}" class="header__nav-link">About</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="{{ pages.videos.url | default: '/pages/videos' }}" class="header__nav-link">Latest Videos</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="{{ collections.merchandise.url | default: '/collections/merchandise' }}" class="header__nav-link">Merch</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="{{ blog.shady-topics.url | default: '/blogs/shady-topics' }}" class="header__nav-link">Shady Topics</a>
+          </li>
+          <li class="header__nav-item">
+            <a href="{{ pages.contact.url | default: '/pages/contact' }}" class="header__nav-link">Contact</a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="header__icons">
+        {% if settings.enable_search %}
+          <button class="header__search-toggle" aria-label="Open search" aria-expanded="false">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        {% endif %}
+        
+        <a href="{{ routes.cart_url }}" class="header__cart-toggle header__icon" aria-label="View cart">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+          </svg>
+          <span class="cart-count" style="display: none;">0</span>
+        </a>
+        
+        <button class="mobile-nav-toggle" aria-label="Open menu" aria-expanded="false">
+          <span class="mobile-nav-toggle__line"></span>
+          <span class="mobile-nav-toggle__line"></span>
+          <span class="mobile-nav-toggle__line"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  {% if settings.enable_search %}
+    <div class="search-form">
+      <div class="container">
+        <form action="{{ routes.search_url }}" method="get" role="search">
+          <input type="search" 
+                 name="q" 
+                 placeholder="Search..." 
+                 class="search-form__input"
+                 value="{{ search.terms | escape }}">
+          <button type="submit" class="search-form__submit">
+            <span class="visually-hidden">Search</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+            </svg>
+          </button>
+        </form>
+        <div class="search-results"></div>
+      </div>
+    </div>
+  {% endif %}
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: var(--color-base-background-1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 0;
+  }
+  
+  .header__logo {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: var(--color-base-text);
+    text-decoration: none;
+  }
+  
+  .header__logo-image {
+    max-height: 50px;
+    width: auto;
+  }
+  
+  .header__nav {
+    display: none;
+  }
+  
+  @media screen and (min-width: 990px) {
+    .header__nav {
+      display: block;
+    }
+  }
+  
+  .header__nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 3rem;
+  }
+  
+  .header__nav-link {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--color-base-text);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .header__nav-link:hover {
+    color: var(--color-base-accent-2);
+  }
+  
+  .header__icons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  .header__icon {
+    color: var(--color-base-text);
+    position: relative;
+  }
+  
+  .cart-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--color-base-accent-1);
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .mobile-nav-toggle {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  
+  .mobile-nav-toggle__line {
+    width: 20px;
+    height: 2px;
+    background: var(--color-base-text);
+    transition: all 0.3s ease;
+  }
+  
+  @media screen and (min-width: 990px) {
+    .mobile-nav-toggle {
+      display: none;
+    }
+  }
+  
+  .search-form {
+    display: none;
+    background: var(--color-base-background-2);
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-form.is-open {
+    display: block;
+  }
+  
+  .search-form form {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+  
+  .search-form__input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    font-size: 1.6rem;
+  }
+  
+  .search-form__submit {
+    background: var(--color-base-accent-1);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .search-results {
+    margin-top: 1rem;
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+  }
+  
+  .search-result {
+    display: block;
+    padding: 1rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: var(--color-base-text);
+  }
+  
+  .search-result:hover {
+    background: var(--color-base-background-2);
+  }
+  
+  /* Mobile navigation styles */
+  @media screen and (max-width: 989px) {
+    .header__nav {
+      position: fixed;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--color-base-background-1);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      transform: translateY(-100%);
+      transition: transform 0.3s ease;
+      z-index: 99;
+    }
+    
+    .header__nav.is-open {
+      transform: translateY(0);
+    }
+    
+    .header__nav-list {
+      flex-direction: column;
+      gap: 0;
+      padding: 2rem;
+    }
+    
+    .header__nav-item {
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    
+    .header__nav-link {
+      display: block;
+      padding: 1.5rem 0;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "label": "Enable search",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

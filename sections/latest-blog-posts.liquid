@@ -1,0 +1,130 @@
+{% comment %}
+  Latest blog posts section for homepage
+{% endcomment %}
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2>{{ section.settings.title | default: "Latest Shady Topics" }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p>{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+    
+    {% assign blog_handle = section.settings.blog | default: 'shady-topics' %}
+    {% assign blog = blogs[blog_handle] %}
+    
+    {% if blog.articles.size > 0 %}
+      <div class="blog-grid">
+        {% for article in blog.articles limit: 3 %}
+          {% render 'blog-card', article: article, show_excerpt: true %}
+        {% endfor %}
+      </div>
+      
+      {% if section.settings.view_all_url != blank %}
+        <div class="text-center mt-4">
+          <a href="{{ section.settings.view_all_url }}" class="btn btn--secondary">
+            {{ section.settings.view_all_text | default: "View All Posts" }}
+          </a>
+        </div>
+      {% endif %}
+    {% else %}
+      <div class="placeholder-blog-posts">
+        <div class="blog-grid">
+          {% for i in (1..3) %}
+            <div class="blog-card">
+              <div class="blog-card__media">
+                <div class="blog-card__media-placeholder">
+                  <svg width="60" height="60" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z" />
+                  </svg>
+                  <p>Blog Post {{ i }}</p>
+                </div>
+              </div>
+              <div class="blog-card__content">
+                <time class="blog-card__date">{{ 'now' | date: '%B %d, %Y' }}</time>
+                <h3 class="blog-card__title">
+                  <a href="#" class="blog-card__title-link">Sample Blog Post Title {{ i }}</a>
+                </h3>
+                <div class="blog-card__excerpt">
+                  This is a sample blog post excerpt that shows how your content will look when you start adding articles to your Shady Topics blog.
+                </div>
+                <div class="blog-card__footer">
+                  <a href="#" class="blog-card__read-more">Read More</a>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .placeholder-blog-posts .blog-card__media-placeholder {
+    height: 20rem;
+    background-color: var(--color-base-background-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-base-accent-2);
+  }
+  
+  .placeholder-blog-posts .blog-card__media-placeholder svg {
+    margin-bottom: 1rem;
+  }
+  
+  .placeholder-blog-posts .blog-card__title-link {
+    pointer-events: none;
+  }
+  
+  .placeholder-blog-posts .blog-card__read-more {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Latest Blog Posts",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Latest Shady Topics"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section subtitle"
+    },
+    {
+      "type": "blog",
+      "id": "blog",
+      "label": "Blog",
+      "info": "Select the blog to display posts from"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View all posts URL"
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all button text",
+      "default": "View All Posts"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Latest Blog Posts"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,155 @@
+{% comment %}
+  Search template
+{% endcomment %}
+
+<div class="container">
+  <div class="section">
+    <div class="section-header">
+      <h1>Search Results</h1>
+      {% if search.performed %}
+        {% if search.results_count == 0 %}
+          <p>No results found for "{{ search.terms | escape }}"</p>
+        {% else %}
+          <p>{{ search.results_count }} result{% unless search.results_count == 1 %}s{% endunless %} found for "{{ search.terms | escape }}"</p>
+        {% endif %}
+      {% endif %}
+    </div>
+    
+    <div class="search-form-container">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-form-page">
+        <input type="search" 
+               name="q" 
+               placeholder="Search products, articles, and pages..." 
+               class="search-input"
+               value="{{ search.terms | escape }}"
+               autofocus>
+        <button type="submit" class="btn">Search</button>
+      </form>
+    </div>
+    
+    {% if search.performed and search.results_count > 0 %}
+      <div class="search-results">
+        {% paginate search.results by 12 %}
+          <div class="search-results-grid">
+            {% for item in search.results %}
+              {% case item.object_type %}
+                {% when 'product' %}
+                  {% render 'product-card', product: item %}
+                {% when 'article' %}
+                  {% render 'blog-card', article: item %}
+                {% when 'page' %}
+                  <div class="search-result-page">
+                    <h3 class="search-result-page__title">
+                      <a href="{{ item.url }}">{{ item.title }}</a>
+                    </h3>
+                    {% if item.content != blank %}
+                      <div class="search-result-page__excerpt">
+                        {{ item.content | strip_html | truncate: 150 }}
+                      </div>
+                    {% endif %}
+                    <a href="{{ item.url }}" class="search-result-page__link">Read more</a>
+                  </div>
+              {% endcase %}
+            {% endfor %}
+          </div>
+          
+          {% if paginate.pages > 1 %}
+            {% render 'pagination', paginate: paginate %}
+          {% endif %}
+        {% endpaginate %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .search-form-container {
+    margin-bottom: 4rem;
+    max-width: 60rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .search-form-page {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .search-input {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: var(--inputs-radius);
+    font-size: 1.6rem;
+    background-color: var(--color-base-background-1);
+  }
+  
+  .search-input:focus {
+    outline: none;
+    border-color: var(--color-base-accent-1);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+    gap: 3rem;
+  }
+  
+  .search-result-page {
+    background-color: var(--color-base-background-1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--media-radius);
+    padding: 2.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .search-result-page:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .search-result-page__title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .search-result-page__title a {
+    color: var(--color-base-text);
+    text-decoration: none;
+  }
+  
+  .search-result-page__title a:hover {
+    color: var(--color-base-accent-1);
+    text-decoration: underline;
+  }
+  
+  .search-result-page__excerpt {
+    color: var(--color-base-accent-2);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .search-result-page__link {
+    display: inline-block;
+    font-weight: 600;
+    color: var(--color-link);
+    text-decoration: none;
+  }
+  
+  .search-result-page__link:hover {
+    color: var(--color-link-hover);
+    text-decoration: underline;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .search-form-page {
+      flex-direction: column;
+    }
+    
+    .search-results-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+  }
+</style>

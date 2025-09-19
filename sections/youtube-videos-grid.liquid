@@ -1,0 +1,304 @@
+{% comment %}
+  YouTube videos grid section for the videos page
+{% endcomment %}
+
+<section class="section">
+  <div class="container">
+    {% if section.settings.title != blank %}
+      <div class="section-header">
+        <h2>{{ section.settings.title }}</h2>
+        {% if section.settings.subtitle != blank %}
+          <p>{{ section.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    {% if section.blocks.size > 0 %}
+      <div class="youtube-videos-grid">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'video' %}
+              <div class="youtube-video-card" {{ block.shopify_attributes }}>
+                {% if block.settings.video_url != blank %}
+                  <div class="youtube-video-card__embed">
+                    {% assign video_id = block.settings.video_url | split: '=' | last %}
+                    <div class="video-embed" data-aspect-ratio="16:9">
+                      <iframe src="https://www.youtube.com/embed/{{ video_id }}" 
+                              frameborder="0" 
+                              allowfullscreen
+                              loading="lazy"
+                              title="{{ block.settings.title | escape }}">
+                      </iframe>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="youtube-video-card__placeholder">
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                    <p>YouTube Video</p>
+                  </div>
+                {% endif %}
+                
+                <div class="youtube-video-card__content">
+                  {% if block.settings.title != blank %}
+                    <h3 class="youtube-video-card__title">{{ block.settings.title }}</h3>
+                  {% endif %}
+                  
+                  {% if block.settings.description != blank %}
+                    <p class="youtube-video-card__description">{{ block.settings.description }}</p>
+                  {% endif %}
+                  
+                  <div class="youtube-video-card__meta">
+                    {% if block.settings.date != blank %}
+                      <time class="youtube-video-card__date" datetime="{{ block.settings.date }}">
+                        {{ block.settings.date | date: '%B %d, %Y' }}
+                      </time>
+                    {% endif %}
+                    
+                    {% if block.settings.duration != blank %}
+                      <span class="youtube-video-card__duration">{{ block.settings.duration }}</span>
+                    {% endif %}
+                  </div>
+                  
+                  {% if block.settings.video_url != blank %}
+                    <a href="{{ block.settings.video_url }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="youtube-video-card__link">
+                      Watch on YouTube
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="placeholder-youtube-grid">
+        <div class="youtube-videos-grid">
+          {% for i in (1..6) %}
+            <div class="youtube-video-card">
+              <div class="youtube-video-card__placeholder">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+                <p>YouTube Video {{ i }}</p>
+              </div>
+              <div class="youtube-video-card__content">
+                <h3 class="youtube-video-card__title">Sample Video Title {{ i }}</h3>
+                <p class="youtube-video-card__description">This is a sample video description showing how your YouTube content will be displayed on the site.</p>
+                <div class="youtube-video-card__meta">
+                  <time class="youtube-video-card__date">{{ 'now' | date: '%B %d, %Y' }}</time>
+                  <span class="youtube-video-card__duration">15:30</span>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    
+    {% if section.settings.channel_url != blank %}
+      <div class="text-center mt-4">
+        <a href="{{ section.settings.channel_url }}" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="btn btn--large">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="margin-right: 0.5rem;">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+          Subscribe to Our Channel
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .youtube-videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(35rem, 1fr));
+    gap: 4rem;
+  }
+  
+  .youtube-video-card {
+    background-color: var(--color-base-background-1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--media-radius);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .youtube-video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  .youtube-video-card__embed {
+    position: relative;
+    width: 100%;
+  }
+  
+  .youtube-video-card__placeholder {
+    width: 100%;
+    height: 25rem;
+    background-color: var(--color-base-background-2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-base-accent-2);
+  }
+  
+  .youtube-video-card__placeholder svg {
+    margin-bottom: 1rem;
+  }
+  
+  .youtube-video-card__content {
+    padding: 2.5rem;
+  }
+  
+  .youtube-video-card__title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+    color: var(--color-base-text);
+  }
+  
+  .youtube-video-card__description {
+    color: var(--color-base-accent-2);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+  }
+  
+  .youtube-video-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+    color: var(--color-base-accent-2);
+  }
+  
+  .youtube-video-card__date {
+    display: block;
+  }
+  
+  .youtube-video-card__duration {
+    background-color: var(--color-base-accent-1);
+    color: var(--color-base-background-1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .youtube-video-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #ff0000;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+  }
+  
+  .youtube-video-card__link:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+  }
+  
+  .youtube-video-card__link::before {
+    content: '';
+    width: 1.6rem;
+    height: 1.6rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ff0000'%3E%3Cpath d='M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'/%3E%3C/svg%3E");
+    background-size: contain;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .youtube-videos-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    
+    .youtube-video-card__content {
+      padding: 2rem;
+    }
+    
+    .youtube-video-card__title {
+      font-size: 1.8rem;
+    }
+    
+    .youtube-video-card__meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "YouTube Videos Grid",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section title",
+      "default": "Latest Videos"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Section subtitle"
+    },
+    {
+      "type": "url",
+      "id": "channel_url",
+      "label": "YouTube channel URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "video",
+      "name": "Video",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Video title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Video description"
+        },
+        {
+          "type": "url",
+          "id": "video_url",
+          "label": "YouTube video URL"
+        },
+        {
+          "type": "text",
+          "id": "date",
+          "label": "Published date (YYYY-MM-DD)"
+        },
+        {
+          "type": "text",
+          "id": "duration",
+          "label": "Video duration (e.g., 15:30)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "YouTube Videos Grid"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,121 @@
+{
+  "current": {
+    "type_header_font": "assistant_n4",
+    "heading_scale": 100,
+    "type_body_font": "assistant_n4",
+    "body_scale": 100,
+    "colors_accent_1": "#121212",
+    "colors_accent_2": "#334155",
+    "colors_text": "#000000",
+    "colors_background_1": "#FFFFFF",
+    "colors_background_2": "#F8F8F8",
+    "page_width": 1200,
+    "spacing_sections": 36,
+    "spacing_grid_horizontal": 8,
+    "spacing_grid_vertical": 8,
+    "card_text_alignment": "left",
+    "card_corner_radius": 8,
+    "card_border_thickness": 1,
+    "card_border_opacity": 10,
+    "card_image_padding": 0,
+    "card_shadow_opacity": 0,
+    "card_shadow_horizontal_offset": 0,
+    "card_shadow_vertical_offset": 0,
+    "card_shadow_blur": 0,
+    "blog_card_text_alignment": "left",
+    "blog_card_corner_radius": 8,
+    "blog_card_border_thickness": 1,
+    "blog_card_border_opacity": 10,
+    "blog_card_image_padding": 0,
+    "blog_card_shadow_opacity": 0,
+    "blog_card_shadow_horizontal_offset": 0,
+    "blog_card_shadow_vertical_offset": 0,
+    "blog_card_shadow_blur": 0,
+    "media_border_thickness": 1,
+    "media_border_opacity": 5,
+    "media_radius": 0,
+    "media_shadow_opacity": 0,
+    "media_shadow_horizontal_offset": 0,
+    "media_shadow_vertical_offset": 0,
+    "media_shadow_blur": 0,
+    "social_youtube_link": "",
+    "social_twitter_link": "",
+    "social_facebook_link": "",
+    "social_instagram_link": "",
+    "predictive_search_enabled": true,
+    "cart_type": "drawer",
+    "logo_width": 100,
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "announcement-bar-0": {
+            "type": "announcement",
+            "settings": {
+              "text": "Welcome to The Shade 4cast - Your #1 destination for political commentary and hot topics!",
+              "link": ""
+            }
+          }
+        },
+        "block_order": [
+          "announcement-bar-0"
+        ],
+        "settings": {
+          "color_scheme": "background-1"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_position": "middle-left",
+          "menu": "main-menu",
+          "menu_type_desktop": "dropdown",
+          "show_line_separator": true,
+          "enable_search": true,
+          "enable_country_selector": false,
+          "enable_language_selector": false
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Quick links",
+              "menu": "footer"
+            }
+          },
+          "footer-1": {
+            "type": "link_list",
+            "settings": {
+              "heading": "Info",
+              "menu": "footer"
+            }
+          },
+          "footer-2": {
+            "type": "text",
+            "settings": {
+              "heading": "About The Shade 4cast",
+              "subtext": "<p>Your go-to 4-person panel talk show covering politics and hot topics with insight, humor, and a whole lot of shade.</p>"
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-1",
+          "footer-2"
+        ],
+        "settings": {
+          "color_scheme": "background-1",
+          "newsletter_enable": true,
+          "newsletter_heading": "Subscribe to our emails",
+          "show_social": true,
+          "enable_country_selector": false,
+          "enable_language_selector": false,
+          "payment_enable": true
+        }
+      }
+    }
+  }
+}

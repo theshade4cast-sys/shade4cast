@@ -1,0 +1,68 @@
+{% comment %}
+  Article template for blog posts
+{% endcomment %}
+
+<div class="container">
+  <div class="section">
+    <article class="article">
+      <header class="article__header">
+        <h1 class="article__title">{{ article.title }}</h1>
+        
+        <div class="article__meta">
+          <time class="article__date" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+            {{ article.published_at | date: '%B %d, %Y' }}
+          </time>
+          
+          {% if article.author != blank %}
+            <span class="article__author">by {{ article.author }}</span>
+          {% endif %}
+          
+          {% if article.tags.size > 0 %}
+            <div class="article__tags">
+              {% for tag in article.tags %}
+                <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__tag">{{ tag }}</a>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </header>
+      
+      {% if article.image %}
+        <div class="article__image">
+          <img src="{{ article.image | image_url: width: 800 }}" 
+               alt="{{ article.image.alt | escape }}"
+               loading="lazy">
+        </div>
+      {% endif %}
+      
+      <div class="article__content rte">
+        {{ article.content }}
+      </div>
+      
+      {% if article.tags.size > 0 %}
+        <footer class="article__footer">
+          <div class="article__tags">
+            <strong>Tags:</strong>
+            {% for tag in article.tags %}
+              <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="article__tag">{{ tag }}</a>
+            {% endfor %}
+          </div>
+        </footer>
+      {% endif %}
+    </article>
+    
+    <div class="article__navigation">
+      {% if blog.previous_article %}
+        <a href="{{ blog.previous_article.url }}" class="article__nav article__nav--prev">
+          &larr; {{ blog.previous_article.title }}
+        </a>
+      {% endif %}
+      
+      {% if blog.next_article %}
+        <a href="{{ blog.next_article.url }}" class="article__nav article__nav--next">
+          {{ blog.next_article.title }} &rarr;
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>

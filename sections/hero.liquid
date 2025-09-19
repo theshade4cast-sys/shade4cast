@@ -1,0 +1,105 @@
+{% comment %}
+  Hero section for The Shade 4cast homepage
+{% endcomment %}
+
+<section class="hero">
+  <div class="container">
+    <div class="hero__content">
+      <h1 class="hero__title">{{ section.settings.title | default: "Welcome to The Shade 4cast" }}</h1>
+      <p class="hero__subtitle">{{ section.settings.subtitle | default: "Your go-to 4-person panel talk show covering politics and hot topics" }}</p>
+      
+      {% if section.settings.button_text != blank and section.settings.button_url != blank %}
+        <a href="{{ section.settings.button_url }}" class="btn btn--large">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background-color: var(--color-base-background-2);
+    padding: 6rem 0;
+    text-align: center;
+  }
+  
+  .hero__content {
+    max-width: 80rem;
+    margin: 0 auto;
+  }
+  
+  .hero__title {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    line-height: 1.2;
+  }
+  
+  .hero__subtitle {
+    font-size: 2rem;
+    color: var(--color-base-accent-2);
+    margin-bottom: 3rem;
+    line-height: 1.4;
+  }
+  
+  @media screen and (min-width: 750px) {
+    .hero__title {
+      font-size: 5.2rem;
+    }
+    
+    .hero__subtitle {
+      font-size: 2.4rem;
+    }
+  }
+  
+  @media screen and (max-width: 749px) {
+    .hero {
+      padding: 4rem 0;
+    }
+    
+    .hero__title {
+      font-size: 3rem;
+    }
+    
+    .hero__subtitle {
+      font-size: 1.8rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Welcome to The Shade 4cast"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Your go-to 4-person panel talk show covering politics and hot topics"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "Button URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

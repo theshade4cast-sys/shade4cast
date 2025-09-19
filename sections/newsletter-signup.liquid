@@ -1,0 +1,144 @@
+{% comment %}
+  Newsletter signup section
+{% endcomment %}
+
+<section class="section">
+  <div class="container">
+    <div class="newsletter">
+      <h2 class="newsletter__title">{{ section.settings.title | default: "Stay in the Loop" }}</h2>
+      <p class="newsletter__text">{{ section.settings.subtitle | default: "Subscribe to our newsletter for the latest updates, behind-the-scenes content, and exclusive merch drops." }}</p>
+      
+      <form class="newsletter__form" action="#" method="post">
+        <input type="email" 
+               class="newsletter__input" 
+               placeholder="{{ section.settings.placeholder | default: 'Your email address' }}" 
+               required>
+        <button type="submit" class="btn">
+          {{ section.settings.button_text | default: "Subscribe" }}
+        </button>
+      </form>
+      
+      {% if section.settings.disclaimer_text != blank %}
+        <p class="newsletter__disclaimer">{{ section.settings.disclaimer_text }}</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .newsletter {
+    background-color: var(--color-base-background-2);
+    padding: 6rem 2rem;
+    text-align: center;
+    border-radius: var(--media-radius);
+  }
+  
+  .newsletter__title {
+    font-size: 3.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .newsletter__text {
+    font-size: 1.8rem;
+    color: var(--color-base-accent-2);
+    margin-bottom: 3rem;
+    max-width: 60rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .newsletter__form {
+    display: flex;
+    max-width: 50rem;
+    margin: 0 auto 2rem;
+    gap: 1rem;
+  }
+  
+  .newsletter__input {
+    flex: 1;
+    padding: 1.5rem 2rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: var(--inputs-radius);
+    font-size: 1.6rem;
+    background-color: var(--color-base-background-1);
+  }
+  
+  .newsletter__input:focus {
+    outline: none;
+    border-color: var(--color-base-accent-1);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .newsletter__disclaimer {
+    font-size: 1.4rem;
+    color: var(--color-base-accent-2);
+    margin-top: 1rem;
+  }
+  
+  @media screen and (max-width: 749px) {
+    .newsletter {
+      padding: 4rem 2rem;
+    }
+    
+    .newsletter__title {
+      font-size: 2.8rem;
+    }
+    
+    .newsletter__text {
+      font-size: 1.6rem;
+    }
+    
+    .newsletter__form {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    
+    .newsletter__input {
+      padding: 1.2rem 1.6rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Newsletter Signup",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Stay in the Loop"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Subscribe to our newsletter for the latest updates, behind-the-scenes content, and exclusive merch drops."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "disclaimer_text",
+      "label": "Disclaimer text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Signup"
+    }
+  ]
+}
+{% endschema %}

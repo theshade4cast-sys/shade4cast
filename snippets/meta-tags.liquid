@@ -1,0 +1,266 @@
+{% comment %}
+  Meta tags snippet for SEO and social sharing
+  
+  This snippet handles all meta tags including:
+  - Open Graph tags for social sharing
+  - Twitter Card tags
+  - JSON-LD structured data
+  - Additional SEO meta tags
+
+  Usage:
+  {% render 'meta-tags' %}
+{% endcomment %}
+
+{%- liquid
+  assign og_title = page_title
+  assign og_url = canonical_url
+  assign og_type = 'website'
+  assign og_description = page_description | default: shop.description | default: shop.name
+  assign og_image = settings.share_image | default: shop.brand.logo
+  assign og_image_alt = settings.share_image.alt | default: shop.name
+
+  if template contains 'product'
+    assign og_type = 'product'
+    if product.featured_media
+      assign og_image = product.featured_media.preview_image
+      assign og_image_alt = product.featured_media.alt | default: product.title
+    endif
+  elsif template contains 'article'
+    assign og_type = 'article'
+    if article.image
+      assign og_image = article.image
+      assign og_image_alt = article.image.alt | default: article.title
+    endif
+  elsif template contains 'collection'
+    if collection.featured_image
+      assign og_image = collection.featured_image
+      assign og_image_alt = collection.featured_image.alt | default: collection.title
+    endif
+  endif
+-%}
+
+<!-- Open Graph meta tags -->
+<meta property="og:site_name" content="{{ shop.name }}">
+<meta property="og:url" content="{{ og_url }}">
+<meta property="og:title" content="{{ og_title | escape }}">
+<meta property="og:type" content="{{ og_type }}">
+<meta property="og:description" content="{{ og_description | escape }}">
+
+{% if og_image %}
+  <meta property="og:image" content="http:{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:secure_url" content="https:{{ og_image | image_url: width: 1200 }}">
+  <meta property="og:image:width" content="{{ og_image.width }}">
+  <meta property="og:image:height" content="{{ og_image.height }}">
+  <meta property="og:image:alt" content="{{ og_image_alt | escape }}">
+{% endif %}
+
+<!-- Twitter Card meta tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ og_title | escape }}">
+<meta name="twitter:description" content="{{ og_description | escape }}">
+
+{% if og_image %}
+  <meta name="twitter:image" content="https:{{ og_image | image_url: width: 1200 }}">
+  <meta name="twitter:image:alt" content="{{ og_image_alt | escape }}">
+{% endif %}
+
+{% if settings.social_twitter_link != blank %}
+  <meta name="twitter:site" content="{{ settings.social_twitter_link | split: 'twitter.com/' | last | prepend: '@' }}">
+{% endif %}
+
+{% if template contains 'product' %}
+  <!-- Product specific meta tags -->
+  <meta property="product:brand" content="{{ product.vendor | escape }}">
+  <meta property="product:availability" content="{% if product.available %}in stock{% else %}out of stock{% endif %}">
+  <meta property="product:condition" content="new">
+  <meta property="product:price:amount" content="{{ product.price | money_without_currency | strip }}">
+  <meta property="product:price:currency" content="{{ cart.currency.iso_code }}">
+  
+  {% for variant in product.variants limit: 3 %}
+    <meta property="product:retailer_item_id" content="{{ variant.id }}">
+  {% endfor %}
+{% endif %}
+
+{% if template contains 'article' %}
+  <!-- Article specific meta tags -->
+  <meta property="article:published_time" content="{{ article.published_at | date: '%Y-%m-%d' }}">
+  {% if article.moderated? and article.published_at != article.updated_at %}
+    <meta property="article:modified_time" content="{{ article.updated_at | date: '%Y-%m-%d' }}">
+  {% endif %}
+  
+  {% if article.author != blank %}
+    <meta property="article:author" content="{{ article.author }}">
+  {% endif %}
+  
+  {% for tag in article.tags limit: 6 %}
+    <meta property="article:tag" content="{{ tag }}">
+  {% endfor %}
+{% endif %}
+
+<!-- JSON-LD structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "{% if template contains 'product' %}Product{% elsif template contains 'article' %}BlogPosting{% elsif template contains 'page' %}WebPage{% else %}WebSite{% endif %}",
+  {% if template contains 'product' %}
+    "name": {{ product.title | json }},
+    "description": {{ product.description | strip_html | json }},
+    "image": [
+      {% for media in product.media limit: 3 %}
+        "https:{{ media.preview_image | image_url: width: 1200 }}"{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    ],
+    "brand": {
+      "@type": "Brand",
+      "name": {{ product.vendor | json }}
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": {{ product.url | within: collections.all | prepend: request.origin | json }},
+      "priceCurrency": {{ cart.currency.iso_code | json }},
+      "price": {{ product.price | divided_by: 100.0 | json }},
+      "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+      "seller": {
+        "@type": "Organization",
+        "name": {{ shop.name | json }}
+      }
+    }
+  {% elsif template contains 'article' %}
+    "headline": {{ article.title | json }},
+    "description": {{ article.excerpt | default: article.content | strip_html | truncate: 160 | json }},
+    "author": {
+      "@type": "Person",
+      "name": {{ article.author | default: shop.name | json }}
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": {{ shop.name | json }},
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https:{{ shop.brand.logo | default: settings.logo | image_url: width: 500 }}"
+      }
+    },
+    "datePublished": {{ article.published_at | date: '%Y-%m-%d' | json }},
+    {% if article.moderated? and article.published_at != article.updated_at %}
+      "dateModified": {{ article.updated_at | date: '%Y-%m-%d' | json }},
+    {% endif %}
+    {% if article.image %}
+      "image": "https:{{ article.image | image_url: width: 1200 }}",
+    {% endif %}
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": {{ request.origin | append: page.url | json }}
+    }
+  {% elsif template contains 'page' %}
+    "name": {{ page.title | json }},
+    "description": {{ page.description | default: page.content | strip_html | truncate: 160 | json }},
+    "url": {{ request.origin | append: page.url | json }}
+  {% else %}
+    "name": {{ shop.name | json }},
+    "description": {{ shop.description | json }},
+    "url": {{ shop.url | json }},
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "{{ request.origin }}/search?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  {% endif %}
+}
+</script>
+
+{% if template contains 'product' %}
+  <!-- Product reviews structured data (if reviews exist) -->
+  {% if product.metafields.reviews.rating.value != blank %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": {{ product.metafields.reviews.rating.value | json }},
+        "reviewCount": {{ product.metafields.reviews.count.value | default: 1 | json }}
+      }
+    }
+    </script>
+  {% endif %}
+{% endif %}
+
+<!-- Breadcrumb structured data -->
+{% unless template == 'index' %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": {{ request.origin | json }}
+      }
+      {% if template contains 'collection' and collection %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ collection.title | json }},
+          "item": {{ request.origin | append: collection.url | json }}
+        }
+      {% elsif template contains 'product' and product %}
+        {% if collection %}
+          ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ collection.title | json }},
+            "item": {{ request.origin | append: collection.url | json }}
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": {{ product.title | json }},
+            "item": {{ request.origin | append: product.url | json }}
+          }
+        {% else %}
+          ,{
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ product.title | json }},
+            "item": {{ request.origin | append: product.url | json }}
+          }
+        {% endif %}
+      {% elsif template contains 'blog' and blog %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ blog.title | json }},
+          "item": {{ request.origin | append: blog.url | json }}
+        }
+        {% if template contains 'article' and article %}
+          ,{
+            "@type": "ListItem",
+            "position": 3,
+            "name": {{ article.title | json }},
+            "item": {{ request.origin | append: article.url | json }}
+          }
+        {% endif %}
+      {% elsif template contains 'page' and page %}
+        ,{
+          "@type": "ListItem",
+          "position": 2,
+          "name": {{ page.title | json }},
+          "item": {{ request.origin | append: page.url | json }}
+        }
+      {% endif %}
+    ]
+  }
+  </script>
+{% endunless %}
+
+<!-- Additional meta tags for mobile and performance -->
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+
+<!-- Preconnect to external domains for performance -->
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://www.google-analytics.com">

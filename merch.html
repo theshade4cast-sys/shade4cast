@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Merch Store - The Shade 4cast</title>
+    <meta name="description" content="Official merchandise from The Shade 4cast - hoodies, t-shirts, mugs, and more featuring our iconic logos and political sayings.">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/merch.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="index.html">
+                    <h1>The Shade 4cast</h1>
+                    <span class="tagline">Political Talk Show</span>
+                </a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Hosts</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="merch.html" class="nav-link active">Merch</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Official Merch Store</h1>
+            <p>Wear your political opinions with pride - shop The Shade 4cast collection</p>
+        </div>
+    </section>
+
+    <!-- Store Content -->
+    <section class="store-content">
+        <div class="container">
+            <!-- Store Filters -->
+            <div class="store-filters">
+                <div class="filter-group">
+                    <label for="category-filter">Category:</label>
+                    <select id="category-filter">
+                        <option value="all">All Products</option>
+                        <option value="apparel">Apparel</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="home">Home & Office</option>
+                        <option value="stickers">Stickers & Decals</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="price-filter">Price Range:</label>
+                    <select id="price-filter">
+                        <option value="all">All Prices</option>
+                        <option value="0-25">$0 - $25</option>
+                        <option value="25-50">$25 - $50</option>
+                        <option value="50-100">$50 - $100</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="sort-filter">Sort By:</label>
+                    <select id="sort-filter">
+                        <option value="featured">Featured</option>
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="newest">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Featured Products -->
+            <div class="featured-section">
+                <h2>Featured Items</h2>
+                <div class="featured-grid">
+                    <div class="product-card featured">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-tshirt"></i>
+                            </div>
+                            <div class="product-badge">Bestseller</div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Political Thunder" Premium Tee</h3>
+                            <p class="product-description">Classic fit t-shirt featuring our iconic lightning bolt logo with "Where Thunder Meets Hurricane" tagline.</p>
+                            <div class="product-price">
+                                <span class="current-price">$24.99</span>
+                                <span class="original-price">$29.99</span>
+                            </div>
+                            <div class="product-options">
+                                <div class="size-options">
+                                    <label>Size:</label>
+                                    <div class="size-buttons">
+                                        <button class="size-btn" data-size="S">S</button>
+                                        <button class="size-btn active" data-size="M">M</button>
+                                        <button class="size-btn" data-size="L">L</button>
+                                        <button class="size-btn" data-size="XL">XL</button>
+                                    </div>
+                                </div>
+                                <div class="color-options">
+                                    <label>Color:</label>
+                                    <div class="color-buttons">
+                                        <button class="color-btn active" data-color="navy" style="background: #1a365d;"></button>
+                                        <button class="color-btn" data-color="black" style="background: #000000;"></button>
+                                        <button class="color-btn" data-color="gray" style="background: #4a5568;"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="1">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="products-section">
+                <h2>All Products</h2>
+                <div class="products-grid">
+                    <!-- Apparel -->
+                    <div class="product-card" data-category="apparel" data-price="39.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Hurricane of Hot Topics" Hoodie</h3>
+                            <p class="product-description">Comfortable pullover hoodie perfect for political discourse sessions.</p>
+                            <div class="product-price">
+                                <span class="current-price">$39.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="2">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="apparel" data-price="22.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-vote-yea"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Shade Thrower" Tank Top</h3>
+                            <p class="product-description">Lightweight tank perfect for those heated political debates.</p>
+                            <div class="product-price">
+                                <span class="current-price">$22.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="3">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Accessories -->
+                    <div class="product-card" data-category="accessories" data-price="14.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-coffee"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Political Fuel" Coffee Mug</h3>
+                            <p class="product-description">15oz ceramic mug for your morning political news consumption.</p>
+                            <div class="product-price">
+                                <span class="current-price">$14.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="4">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="accessories" data-price="18.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-baseball-ball"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Shade 4cast" Baseball Cap</h3>
+                            <p class="product-description">Adjustable cap with embroidered logo - perfect for outdoor rallies.</p>
+                            <div class="product-price">
+                                <span class="current-price">$18.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="5">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Home & Office -->
+                    <div class="product-card" data-category="home" data-price="32.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-image"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Political Thunder" Poster Set</h3>
+                            <p class="product-description">Set of 3 motivational political posters for your home office.</p>
+                            <div class="product-price">
+                                <span class="current-price">$32.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="6">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="home" data-price="45.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-laptop"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Shade 4cast" Laptop Sleeve</h3>
+                            <p class="product-description">Padded laptop sleeve with our logo - perfect for political activists on the go.</p>
+                            <div class="product-price">
+                                <span class="current-price">$45.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="7">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <!-- Stickers -->
+                    <div class="product-card" data-category="stickers" data-price="8.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Throwing Shade" Sticker Pack</h3>
+                            <p class="product-description">Waterproof vinyl sticker pack with 5 different political sayings.</p>
+                            <div class="product-price">
+                                <span class="current-price">$8.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="8">Add to Cart</button>
+                        </div>
+                    </div>
+
+                    <div class="product-card" data-category="stickers" data-price="12.99">
+                        <div class="product-image">
+                            <div class="product-placeholder">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <h3>"Political Lightning" Car Decal</h3>
+                            <p class="product-description">Weather-resistant car decal featuring our lightning bolt logo.</p>
+                            <div class="product-price">
+                                <span class="current-price">$12.99</span>
+                            </div>
+                            <button class="add-to-cart-btn" data-product-id="9">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" id="close-cart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            <div class="empty-cart">
+                <i class="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <p>Add some political gear to get started!</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total: $<span id="cart-total">0.00</span></span>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cart-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>The Shade 4cast</h3>
+                    <p>Political discourse for the digital age. Join us for unfiltered conversations about the issues that matter.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Store Info</h4>
+                    <ul>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Customer Support</a></li>
+                        <li><a href="#">Track Your Order</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Hosts</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="merch.html">Merch</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 The Shade 4cast. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+    <script src="scripts/merch.js"></script>
+</body>
+</html>
